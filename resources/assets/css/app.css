@@ -1,0 +1,9 @@
+@import "../vendor/font-awesome/css/all.min.css";
+@import "../vendor/bootstrap-icons/bootstrap-icons.css";
+
+
+@import "./style-rtl.css";
+
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
