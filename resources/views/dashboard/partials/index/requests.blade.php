@@ -87,6 +87,10 @@
                   </div>
             </div> -->
             @if(auth()->check() && auth()->user()->role==='author')
+  <hr />
+            <div class="text-center mt-4 mb-4">
+                  <h4>کارتابل درخواست مدیران</h4>
+            </div>
             <div class="col-sm-6 col-lg-3">
                   <div class="card card-body border p-3">
                         <a href="{{route('supervisor.vam.index')}}">
@@ -97,7 +101,7 @@
                                     </div>
                                     <!-- Content -->
                                     <div class="ms-3">
-                                          <h6 class="mb-0">درخواست وام</h6>
+                                          <h6 class="mb-0">درخواست های وام</h6>
                                     </div>
                               </div>
                         </a>
@@ -113,7 +117,7 @@
                                     </div>
                                     <!-- Content -->
                                     <div class="ms-3">
-                                          <h6 class="mb-0">درخواست تعمیرگاه</h6>
+                                          <h6 class="mb-0">درخواست های  تعمیرگاه</h6>
                                     </div>
                               </div>
                         </a>
