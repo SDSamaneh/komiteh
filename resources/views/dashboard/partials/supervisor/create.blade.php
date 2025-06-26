@@ -2,10 +2,34 @@
       <div class="container">
             <div class="row pb-4 bg-light p-3 mb-4 rounded">
                   <div class="col-12">
+                        <div class="toast-container position-fixed top-3 end-0 p-3">
+                              @if (session('success'))
+                              <div class="toast align-items-center text-bg-success border-0 show" role="alert">
+                                    <div class="d-flex">
+                                          <div class="toast-body">
+                                                {{ session('success') }}
+                                          </div>
+                                          <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"></button>
+                                    </div>
+                              </div>
+                              @endif
+
+                              @if (session('error'))
+                              <div class="toast align-items-center text-bg-danger border-0 show" role="alert">
+                                    <div class="d-flex">
+                                          <div class="toast-body">
+                                                {{ session('error') }}
+                                          </div>
+                                          <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"></button>
+                                    </div>
+                              </div>
+                              @endif
+                        </div>
                         <div class="card border">
                               <div class="card-header">
                                     <h3>افزودن مدیر واحد</h3>
                               </div>
+
                               <div class="card-body">
                                     <form action="{{route('supervisor.store')}}" method="post" enctype="multipart/form-data">
                                           @csrf
@@ -64,6 +88,7 @@
                                           </h1>
                                     </div>
                               </div>
+
                               <!-- Card body START -->
                               <div class="card-body p-3">
                                     <!-- Post list table START -->

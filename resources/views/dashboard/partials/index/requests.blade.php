@@ -87,7 +87,12 @@
                   </div>
             </div> -->
             @if(auth()->check() && auth()->user()->role==='author')
+<<<<<<< HEAD
   <hr />
+=======
+
+           
+>>>>>>> 286030e7073526349a3fd62993114ae3306ba096
             <div class="text-center mt-4 mb-4">
                   <h4>کارتابل درخواست مدیران</h4>
             </div>
@@ -117,7 +122,10 @@
                                     </div>
                                     <!-- Content -->
                                     <div class="ms-3">
+<<<<<<< HEAD
                                           <h6 class="mb-0">درخواست های  تعمیرگاه</h6>
+=======
+>>>>>>> 286030e7073526349a3fd62993114ae3306ba096
                                     </div>
                               </div>
                         </a>

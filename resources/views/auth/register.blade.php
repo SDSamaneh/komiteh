@@ -19,7 +19,7 @@
                                           </ul>
                                     </div>
                                     @endif
-                                    
+
                                     <form class="mt-4" method="post" action="{{route('register')}}">
                                           @csrf
                                           <div class="row">

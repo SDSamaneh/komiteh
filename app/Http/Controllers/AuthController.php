@@ -38,7 +38,9 @@ class AuthController extends Controller
             'email.required' => 'ایمیل معتبر خود را وارد کنید',
             'email.max' => 'ایمیل باید حداکثر 255 کاراکتر باشد',
             'email.unique' => 'ایمیل قبلا موجود می باشد',
+            'idCard.required' => 'کدملی اجباری می باشد',
             'idCard.unique' => 'کدملی قبلا موجود می باشد',
+            'phone_number.required'=>'شماره همراه اجباری می باشد',
             'password.required' => 'رمز عبور خود را وارد کنید',
             'password.min' => 'رمز عبور باید حداقل 8 کاراکتر باشد',
             'password.max' => 'رمز عبور باید حداکثر 12 کاراکتر باشد',
@@ -74,7 +76,7 @@ class AuthController extends Controller
                 'success' => auth()->user()->name . ' خوش آمدید'
             ]);
         } else {
-            return redirect()->back()->with('erroe', 'مشکلی پیش آمده است . مجدد اقدام فرمایید.');
+            return redirect()->back()->with('error', 'نام کاربری یا رمز عبور اشتباه است ');
         }
     }
 

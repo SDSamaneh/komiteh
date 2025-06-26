@@ -165,7 +165,6 @@ class SupervisorController extends Controller
     }
 
 
-
     public function index()
     {
         $supervisors = Supervisor::all();
@@ -203,16 +202,51 @@ class SupervisorController extends Controller
 
     public function edit(string $id)
     {
-        //
+        $supervisor = Supervisor::find($id);
+        $role = Auth::user()->role;
+        $departmans = Departmans::all();
+        return $supervisor ? view('dashboard.editSupervisor', compact('role', 'supervisor', 'departmans')) : redirect()->route('supervisor.index')->with('error', 'درخواست مورد نظر پیدا نشد.');
     }
 
     public function update(Request $request, string $id)
     {
-        //
+        // دریافت رکورد Supervisor با شناسه‌ی مشخص
+        $supervisor = Supervisor::find($id);
+
+        // اگر رکورد موجود نیست، خطا می‌دهیم
+        if (!$supervisor) {
+            return redirect()->route('supervisor.index')->with('error', 'مدیر واحد پیدا نشد.');
+        }
+
+        // اعتبارسنجی ورودی‌ها
+        $fields = $request->validate([
+            'name' => 'required|string',
+            'idCard' => 'required|ir_national_id|unique:supervisors,idCard,' . $supervisor->id . ',id',
+            'departmans_id' => 'nullable|exists:departmans,id',
+        ], [
+            'name.required' => 'نام و نام خانوادگی مدیر واحد را وارد کنید',
+            'idCard.required' => 'کدملی مدیر واحد وارد شود',
+            'idCard.unique' => 'کدملی وارد شده از قبل موجود می باشد.'
+        ]);
+
+        // به‌روزرسانی رکورد
+        $supervisor->name = $request->input('name');
+        $supervisor->idCard = $request->input('idCard');
+        $supervisor->departmans_id = $request->input('departmans_id');
+        $supervisor->save(); // ذخیره تغییرات در دیتابیس
+
+        // بازگشت به صفحه با پیام موفقیت
+        return redirect()->route('supervisor.index')->with('success', 'اطلاعات مدیر واحد با موفقیت ویرایش شد.');
     }
 
     public function destroy(string $id)
     {
-        //
+        $supervisor = Supervisor::findOrFail($id);
+
+        // حذف رکورد
+        $supervisor->delete();
+
+        // بازگشت به صفحه با پیام موفقیت
+        return redirect()->route('supervisor.index')->with('success', 'درخواست مورد نظر با موفقیت حذف گردید');
     }
 }
