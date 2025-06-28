@@ -21,13 +21,32 @@ class VamController extends Controller
 {
     use AuthorizesRequests;
 
-    public function index(DashboardVam $vam)
+    public function index(Request $request, DashboardVam $vam)
     {
-        $vams = Vam::all();
+        $search = $request->search;
+
+        $query = Vam::query()
+            ->leftJoin('supervisors', 'vams.supervisors_id', '=', 'supervisors.id')
+            ->leftJoin('departmans', 'vams.departmans_id', '=', 'departmans.id')
+            ->select('vams.*'); // مهم: فقط ستون‌های جدول وام‌ها رو بگیر
+
+        if (!empty($search)) {
+            $query->where(function ($q) use ($search) {
+                $q->where('vams.name', 'like', "%$search%")
+                    ->orWhere('vams.idCard', 'like', "%$search%")
+                    ->orWhere('vams.price', 'like', "%$search%")
+                    ->orWhere('vams.resone', 'like', "%$search%")
+                    ->orWhere('supervisors.name', 'like', "%$search%")
+                    ->orWhere('departmans.name', 'like', "%$search%");
+            });
+        }
+
+        $vams = $query->latest('vams.created_at')->paginate(10);
         $role = Auth::user()->role;
         $supervisors = Supervisor::all();
         $departmans = Departmans::all();
         $vamCount = Vam::count();
+
         return view('dashboard/allVamKomiteh', compact('vams', 'role', 'vamCount', 'supervisors', 'departmans'));
     }
 
@@ -59,16 +78,6 @@ class VamController extends Controller
             ? redirect()->route('vam.create')->with('success', 'درخواست وام با موفقیت ثبت شد.')
             : redirect()->route('vam.create')->with('error', 'مشکلی رخ داده است.');
     }
-
-    // public function approveByManager1(Vam $vam)
-    // {
-    //     $this->authorize('validateManager1', $vam);
-
-    //     $vam->validationManager1 = 'Yes';
-    //     $vam->save();
-
-    //     return back()->with('success', 'تأیید شد توسط مدیر اول.');
-    // }
 
     public function show(string $id)
     {

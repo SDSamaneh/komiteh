@@ -12,10 +12,30 @@ use Illuminate\Support\Facades\Auth;
 class ServiceController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
+
+        $search = $request->search;
+
+        $query = Service::query()
+            ->leftJoin('supervisors', 'services.supervisors_id', '=', 'supervisors.id')
+            ->leftJoin('departmans', 'services.departmans_id', '=', 'departmans.id')
+            ->select('services.*'); // مهم: فقط ستون‌های جدول وام‌ها رو بگیر
+
+        if (!empty($search)) {
+            $query->where(function ($q) use ($search) {
+                $q->where('services.name', 'like', "%$search%")
+                    ->orWhere('services.idCard', 'like', "%$search%")
+                    ->orWhere('services.price', 'like', "%$search%")
+                    ->orWhere('services.resone', 'like', "%$search%")
+                    ->orWhere('supervisors.name', 'like', "%$search%")
+                    ->orWhere('departmans.name', 'like', "%$search%");
+            });
+        }
+
+        $services = $query->latest('services.created_at')->paginate(10);
+
         $role = Auth::user()->role;
-        $services = Service::all();
         $serviceCount = Service::count();
         return view('dashboard/allService', compact('role', 'serviceCount', 'services'));
     }
@@ -28,7 +48,6 @@ class ServiceController extends Controller
         $departmans = Departmans::all();
         return view('dashboard/createService', compact('services', 'role', 'supervisors', 'departmans'));
     }
-
     public function store(Request $request)
     {
         $fields = $request->validate([
@@ -66,12 +85,10 @@ class ServiceController extends Controller
             ? redirect()->route('service.create')->with('success', 'دسته‌بندی شما با موفقیت ثبت شد.')
             : redirect()->route('service.create')->with('error', 'مشکلی رخ داده است.');
     }
-
     public function show(string $id)
     {
         //
     }
-
     public function edit(string $id)
     {
         $service = Service::find($id);
@@ -80,7 +97,6 @@ class ServiceController extends Controller
         $departmans = Departmans::all();
         return $service ? view('dashboard.editService', compact('service', 'role', 'supervisors', 'departmans')) : redirect()->route('service.index')->with('error', 'درخواست مورد نظر پیدا نشد.');
     }
-
     public function update(Request $request, Service $service)
     {
         $user = auth()->user();
@@ -177,7 +193,6 @@ class ServiceController extends Controller
                 ]);
 
                 break;
-
             case 'manager2': // رییس کمیته رفاهی
 
                 $request->validate([
@@ -193,12 +208,12 @@ class ServiceController extends Controller
             default:
                 return abort(403, 'شما اجازه دسترسی به این عملیات را ندارید.');
         }
-
         return redirect()->back()->with('success', 'تغییرات با موفقیت ذخیره شد.');
     }
-
     public function destroy(string $id)
     {
-        //
+        $services = Service::findOrfail($id);
+        $servicesDestroy = $services->delete();
+        return $servicesDestroy ? redirect()->route('service.index')->with('success', 'سرویس مورد نظر با موفقیت حذف گردید') : redirect()->route('service.index')->with('error', 'خطایی در حذف  سرویس مورد نظر رخ داده است');
     }
 }

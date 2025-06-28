@@ -2,15 +2,12 @@
        <div class="container">
              <div class="d-flex justify-content-between align-items-baseline mb-4">
                    <div class="col-12">
-                         <!-- Blog list table START -->
                          <div class="card border bg-transparent rounded-3">
-                               <!-- Card header START -->
                                <div class="card-header bg-transparent border-bottom p-3">
                                      <div class="d-sm-flex justify-content-between align-items-center">
                                            <h5 class="mb-2 mb-sm-0">درخواست های من</h5>
                                      </div>
                                </div>
-
                                <div class="card-body">
                                      <div class="table-responsive border-0">
                                            <table class="table align-middle p-4 mb-0 table-hover table-shrink">
@@ -26,7 +23,7 @@
                                                        @forelse($allRequests as $item)
                                                        <tr>
                                                              <td>{{ $item['type'] }}</td>
-                                                             <td>{{ $item['created_at']}}</td>
+                                                             <td>{{ jdate($item['created_at'])->format('Y/m/d') }}</td>
 
                                                              @if($item['status'] === 'No')
                                                              <td>
@@ -37,13 +34,11 @@
                                                                    <h6 class="badge text-bg-success mb-2"><i class="fas fa-circle me-2 small fw-bold"></i>تایید مدیر واحد</h6>
                                                              </td>
                                                              @endif
-
                                                              <td>
                                                                    <a href="{{ $item['edit_route'] }}" class="btn btn-light btn-round mb-0" title="ویرایش">
                                                                          <i class="fas fa-edit"></i>
                                                                    </a>
                                                              </td>
-
                                                        </tr>
                                                        @empty
                                                        <tr>
@@ -57,6 +52,5 @@
                          </div>
                    </div>
              </div>
-
        </div>
  </section>

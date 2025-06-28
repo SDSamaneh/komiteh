@@ -7,41 +7,44 @@ use App\Http\Controllers\Controller;
 use App\Models\dashboard\Supervisor;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+
+    public function index(Request $request)
     {
-        $users = User::all();
+        $query = User::query(); // شروع ساخت کوئری
+
+        // اگر فیلد جستجو پر شده بود
+        if ($request->filled('search')) {
+            $search = $request->search;
+
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%$search%")
+                    ->orWhere('idCard', 'like', "%$search%")
+                    ->orWhere('phone_number', 'like', "%$search%");
+            });
+        }
+
+        $users = $query->latest('users.created_at')->paginate(10);
+
         $userCount = User::count();
         return view('dashboard/users', compact('users', 'userCount'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         //
