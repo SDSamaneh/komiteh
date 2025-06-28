@@ -16,7 +16,6 @@ class IndexController extends Controller
     {
         $user = auth()->user(); // گرفتن کاربر لاگین شده
 
-
         if ($user) {
             $vamCount = Vam::where('author_id', $user->id)->count();
             $serviceCount = Service::where('author_id', $user->id)->count();
@@ -55,16 +54,7 @@ class IndexController extends Controller
             ];
         });
 
-        $announcements = Announcement::where('author_id', $user->id)->get()->map(function ($item) {
-            return [
-                'type' => 'اطلاعیه',
-                'title' => $item->title,
-                'created_at' => $item->created_at,
-                'edit_route' => route('announcement.edit', $item->id),
-            ];
-        });
-
-        $allRequests = $vams->merge($services)->merge($maadirans)->merge($announcements)->sortByDesc('created_at');
+        $allRequests = $vams->merge($services)->merge($maadirans)->sortByDesc('created_at');
 
         return view('dashboard.index', compact('user', 'vamCount', 'allRequests', 'serviceCount', 'announcementCount', 'maadiranCount'));
     }

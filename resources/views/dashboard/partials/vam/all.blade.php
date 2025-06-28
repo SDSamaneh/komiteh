@@ -37,12 +37,19 @@
                               @endif
                         </div>
                         <div class="card border bg-transparent rounded-3">
-                              <!-- Card body START -->
+                              <div class="card-header bg-transparent border-bottom p-3">
+                                    <div class="d-sm-flex justify-content-between align-items-center">
+                                          <form action="{{ route('vam.index') }}" method="GET" class="mb-3">
+                                                <div class="input-group">
+                                                      <input type="text" name="search" value="{{ request('search') }}" class="form-control" placeholder="براساس نام و کدملی و ...">
+                                                      <button type="submit" class="btn btn-danger">جستجو</button>
+                                                </div>
+                                          </form>
+                                    </div>
+                              </div>
                               <div class="card-body p-3">
-                                    <!-- Post list table START -->
                                     <div class="table-responsive border-0">
                                           <table class="table align-middle p-1 mb-0 table-hover table-shrink">
-                                                <!-- Table head -->
                                                 <thead class="table-dark">
                                                       <tr>
                                                             <th scope="col" class="border-0  rounded-start">شناسه</th>
@@ -52,6 +59,7 @@
                                                             <th scope="col" class="border-0">مدیرواحد</th>
                                                             <th scope="col" class="border-0">مبلغ (تومان)</th>
                                                             <th scope="col" class="border-0">علت</th>
+                                                            <th scope="col" class="border-0">تاریخ درخواست</th>
                                                             <th scope="col" class="border-0">اعتبارسنجی</th>
                                                             <th scope="col" class="border-0">عملیات</th>
                                                             <th scope="col" class="border-0">حذف</th>
@@ -59,9 +67,7 @@
                                                 </thead>
                                                 <tbody class="border-top-0">
                                                       @if($vams)
-
                                                       @foreach($vams as $vam)
-
                                                       <tr>
                                                             @if($vam->status==='Yes')
                                                             <td>
@@ -84,6 +90,11 @@
                                                             </td>
                                                             <td>
                                                                   <h6 class="course-title mt-2 mt-md-0 mb-0">{{$vam->resone}}</h6>
+                                                            </td>
+                                                            <td>
+                                                                  <h6 class="course-title mt-2 mt-md-0 mb-0">
+                                                                        {{ jdate($vam->created_at)->format('Y/m/d') }}
+                                                                  </h6>
                                                             </td>
                                                             <!-- humanResources validation -->
                                                             @if($vam->validationHr === 'No')
@@ -124,6 +135,9 @@
                                                       @endif
                                                 </tbody>
                                           </table>
+                                    </div>
+                                    <div class="d-flex justify-content-center mt-4">
+                                          {{ $vams->appends(request()->query())->links() }}
                                     </div>
                               </div>
                         </div>
