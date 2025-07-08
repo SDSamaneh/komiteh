@@ -1,3 +1,4 @@
+
 @extends('layouts.dashboard.master')
 @section('content')
 <!-- **************** MAIN CONTENT START **************** -->
@@ -5,11 +6,10 @@
       <!-- Inner intro START -->
       <section>
             <div class="container">
-                  <div class="row">
-                        <div class="col-md-12 col-lg-8 col-xl-8 mx-auto ">
-                              <div class="p-4 p-sm-5 rounded custom-box-shadow">
-                                    <h2>ورود به حساب کاربری</h2>
-                                    <!-- Form START -->
+                  <div class="row bg-form">
+                        <div class="custom-box-shadow py-5">
+                              <div class="col-md-12 col-lg-8 col-xl-8 mx-auto p-4 p-sm-5">
+                                    <h2 class="text-center">ورود به حساب کاربری</h2>
                                     <form method="post" action="{{route('login')}}" class="mt-4">
                                           @csrf
                                           <div class="row">

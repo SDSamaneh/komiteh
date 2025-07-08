@@ -81,15 +81,21 @@
             <div class="row g-4">
                   <div class="col-md-6 col-xl-12">
                         <div class="card border bg-transparent rounded-3">
-                              <div class="card-header">
-                                    <div class="d-sm-flex justify-countent-sm-between align-items-center">
+                                <div class="card-header d-flex justify-content-between border-bottom p-3">
+                                    <div class="d-flex">
                                           <h1 class="mb-2 mb-sm-0 h3">لیست مدیران واحد
                                                 <span class="badge bg-primary bg-opacity-10 text-primary">{{$supervisorCount}}</span>
                                           </h1>
                                     </div>
+                                    <div class="d-sm-flex justify-content-between align-items-center">
+                                          <form action="{{ route('supervisor.index') }}" method="GET" class="mb-3">
+                                                <div class="input-group">
+                                                      <input type="text" name="search" value="{{ request('search') }}" class="form-control">
+                                                      <button type="submit" class="btn btn-danger">جستجو</button>
+                                                </div>
+                                          </form>
+                                    </div>
                               </div>
-
-                              <!-- Card body START -->
                               <div class="card-body p-3">
                                     <!-- Post list table START -->
                                     <div class="table-responsive border-0">
@@ -141,6 +147,9 @@
 
                                                 </tbody>
                                           </table>
+                                    </div>
+					 <div class="d-flex justify-content-center mt-4">
+                                          {{ $supervisors->appends(request()->query())->links() }}
                                     </div>
                               </div>
                         </div>

@@ -5,11 +5,10 @@
 <main>
       <section>
             <div class="container">
-                  <div class="row">
-                        <div class="col-md-12 col-lg-8 col-xl-8 mx-auto ">
-                              <div class="rounded custom-box-shadow p-4 p-sm-5">
-                                    <h1 class="text-center font-bold">ثبت نام</h1>
-                                    <!-- Form START -->
+                 <div class="row bg-form">
+                        <div class="custom-box-shadow py-5">
+                              <div class="col-md-12 col-lg-8 col-xl-8 mx-auto p-5 p-sm-5">
+                                    <h2 class="text-center font-bold">ثبت نام</h2>
                                     @if ($errors->any())
                                     <div class="alert alert-danger">
                                           <ul class="mb-0">

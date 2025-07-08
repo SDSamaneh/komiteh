@@ -26,9 +26,20 @@
                               @endif
                         </div>
                         <div class="card border">
-                              <div class="card-header">
-                                    <h3 class="mb-2 mb-sm-0">افزودن دپارتمان</h3>
-
+                                    <div class="card-header d-flex justify-content-between border-bottom p-3">
+                                    <div class="d-flex">
+                                          <h1 class="mb-2 mb-sm-0 h3">دپارتمان ها
+                                                <span class="badge bg-primary bg-opacity-10 text-primary">{{$departmanCount}}</span>
+                                          </h1>
+                                    </div>
+                                    <div class="d-sm-flex justify-content-between align-items-center">
+                                          <form action="{{ route('departman.index') }}" method="GET" class="mb-3">
+                                                <div class="input-group">
+                                                      <input type="text" name="search" value="{{ request('search') }}" class="form-control">
+                                                      <button type="submit" class="btn btn-danger">جستجو</button>
+                                                </div>
+                                          </form>
+                                    </div>
                               </div>
                               <div class="card-body">
                                     <form action="{{route('departman.store')}}" method="post" enctype="multipart/form-data">
@@ -103,6 +114,9 @@
                                                       @endif
                                                 </tbody>
                                           </table>
+                                    </div>
+ <div class="d-flex justify-content-center mt-4">
+                                          {{ $departmans->appends(request()->query())->links() }}
                                     </div>
                               </div>
                         </div>

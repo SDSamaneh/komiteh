@@ -10,9 +10,19 @@ use Illuminate\Http\Request;
 class DepartmanController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $departmans = Departmans::all();
+             $query = Departmans::query();
+        if ($request->filled('search')) {
+
+            $search = $request->search;
+
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%$search%");
+            });
+        }
+
+        $departmans = $query->latest('departmans.created_at')->paginate(10);
         $departmanCount = Departmans::count();
         return view('dashboard/departman', compact('departmans', 'departmanCount'));
     }

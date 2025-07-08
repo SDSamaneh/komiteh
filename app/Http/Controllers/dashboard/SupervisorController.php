@@ -165,9 +165,18 @@ class SupervisorController extends Controller
     }
 
 
-    public function index()
+    public function index(Request $request)
     {
-        $supervisors = Supervisor::all();
+          $query = Supervisor::query();
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%$search%")
+                    ->orWhere('idCard', 'like', "%$search%");
+            });
+        }
+        $supervisors = $query->latest('supervisors.created_at')->paginate(10);
+
         $departmans = Departmans::all();
         $supervisorCount = Supervisor::count();
         return view('dashboard/supervisor', compact('supervisors', 'departmans', 'supervisorCount'));
