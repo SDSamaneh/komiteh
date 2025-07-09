@@ -7,7 +7,7 @@
             <div class="container">
                  <div class="row bg-form">
                         <div class="custom-box-shadow py-5">
-                              <div class="col-md-12 col-lg-8 col-xl-8 mx-auto p-5 p-sm-5">
+                              <div class="col-md-12 col-lg-8 col-xl-8 mx-auto pt-5">
                                     <h2 class="text-center font-bold">ثبت نام</h2>
                                     @if ($errors->any())
                                     <div class="alert alert-danger">
@@ -19,7 +19,7 @@
                                     </div>
                                     @endif
 
-                                    <form class="mt-4" method="post" action="{{route('register')}}">
+                                    <form class="mt-4 pt-5" method="post" action="{{route('register')}}">
                                           @csrf
                                           <div class="row">
                                                 <!-- Name -->

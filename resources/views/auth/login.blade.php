@@ -5,12 +5,12 @@
 <main>
       <!-- Inner intro START -->
       <section>
-            <div class="container">
-                  <div class="row bg-form">
+            <div class="container"> 
+		<div class="row bg-form">
                         <div class="custom-box-shadow py-5">
                               <div class="col-md-12 col-lg-8 col-xl-8 mx-auto p-4 p-sm-5">
                                     <h2 class="text-center">ورود به حساب کاربری</h2>
-                                    <form method="post" action="{{route('login')}}" class="mt-4">
+                                    <form method="post" action="{{route('login')}}" class="mt-4 pt-5">
                                           @csrf
                                           <div class="row">
                                                 <!-- idCard -->
