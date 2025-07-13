@@ -32,18 +32,20 @@
                                     <li> <a class="dropdown-item" href="{{route('service.create')}}">افزودن درخواست</a> </li>
                               </ul>
                         </li>
+			<li class="nav-item dropdown">
+                              <a class="nav-link dropdown-toggle" href="#" id="postMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="bi bi-people me-1 fs-5"></i>مدیریت درخواست خرید مادیران</a>
+                              <ul class="dropdown-menu" aria-labelledby="postMenu">
+                                    <li> <a class="dropdown-item" href="{{route('maadiran.index')}}">همه درخواست ها</a></li>
+                                    <li> <a class="dropdown-item" href="{{route('maadiran.create')}}">افزودن درخواست</a> </li>
+
+                              </ul>
+                        </li>
                         <li class="nav-item dropdown">
                               <a class="nav-link dropdown-toggle" href="#" id="postMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="bi bi-people me-1 fs-5"></i>مدیریت کاربران</a>
                               <ul class="dropdown-menu" aria-labelledby="postMenu">
                                     <li> <a class="dropdown-item" href="{{route('users.index')}}">همه کاربران</a> </li>
                                     <li> <a class="dropdown-item" href="{{route('supervisor.index')}}">مدیران واحد</a> </li>
                                     <li> <a class="dropdown-item" href="{{route('departman.index')}}">دپارتمان</a> </li>
-                              </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                              <a class="nav-link dropdown-toggle" href="#" id="postMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="bi bi-people me-1 fs-5"></i>مدیریت درخواست خرید مادیران</a>
-                              <ul class="dropdown-menu" aria-labelledby="postMenu">
-                                    <li> <a class="dropdown-item" href="{{route('maadiran.index')}}">همه درخواست مادیران</a></li>
                               </ul>
                         </li>
 
